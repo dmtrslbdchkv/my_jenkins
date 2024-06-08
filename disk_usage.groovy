@@ -1,11 +1,26 @@
-def os = System.getProperty('os.name').toLowerCase()
-if (os.contains('win')) {
-    println "Running on Windows"
-    def process = "wmic logicaldisk get size,freespace,caption".execute()
-    process.in.eachLine { line -> println line }
-} else {
-    println "Running on Unix-like OS"
-    def process = "df -h".execute()
-    process.in.eachLine { line -> println line }
+pipeline {
+    agent any 
+    stages {
+        stage('Clone Repository') {
+            steps {
+                sh(script: 'echo clone')
+            }
+        }
+        stage('Build') { 
+            steps {
+                sh(script: 'echo build')
+            }
+        }
+        stage('Test') { 
+            steps {
+                sh(script: 'echo test')
+            }
+        }
+        stage('Deploy') { 
+            steps {
+                sh(script: 'echo deploy')
+                sh(script: 'df -h')
+            }
+        }
+    }
 }
-process.waitFor()
